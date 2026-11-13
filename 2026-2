@@ -1,0 +1,49 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Core Kiosk System" as kiosk
+actor "Study Cafe User" as user
+actor "Admin Dashboard" as admin
+
+rectangle "Smart Desk Control System" {
+  usecase "좌석 결제 및 입실 수신" as uc_in
+  usecase "좌석 퇴실 수신" as uc_out
+  usecase "착석 감지" as uc_sit
+  usecase "주변 소음 측정" as uc_noise
+  
+  usecase "전원 인가 (ON)" as uc_power_on
+  usecase "전원 차단 (OFF)" as uc_power_off
+  
+  usecase "소음 경고 점멸" as uc_warn_noise
+  usecase "자리 비움 예고 점멸" as uc_warn_leave
+  usecase "자동 자리 비움 판별" as uc_auto_leave
+  
+  usecase "상태 로그 전송" as uc_log
+  usecase "강제 원격 제어" as uc_remote
+}
+
+kiosk --> uc_in
+kiosk --> uc_out
+user --> uc_sit
+user --> uc_noise
+
+uc_in ..> uc_power_on : <<include>>
+uc_sit ..> uc_power_on : <<include>>
+
+uc_out ..> uc_power_off : <<include>>
+uc_auto_leave ..> uc_power_off : <<include>>
+
+uc_noise <.. uc_warn_noise : <<extend>>
+uc_sit <.. uc_auto_leave : <<extend>>
+uc_auto_leave ..> uc_warn_leave : <<include>>
+
+uc_power_on ..> uc_log : <<include>>
+uc_power_off ..> uc_log : <<include>>
+uc_warn_noise ..> uc_log : <<include>>
+
+admin --> uc_remote
+uc_remote ..> uc_power_on : <<include>>
+uc_remote ..> uc_power_off : <<include>>
+uc_log --> admin
+@enduml
