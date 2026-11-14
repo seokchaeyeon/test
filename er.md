@@ -32,7 +32,6 @@ erDiagram
         int employed_student_count
     }
 
-    %% 취업 확정 구직자를 별도의 개체로 분리하여 유지
     HIRED_SEEKER {
         string jumin_no PK, FK
         string company_name FK
