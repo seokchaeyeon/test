@@ -1,7 +1,7 @@
 ## 문제 1의 DB
 가정 
     1. 자격증은 단일속성으로 가정
-    2. 한명의 구직자는 하나의 기업의 최종 취업확
+    2. 한명의 구직자는 하나의 기업의 최종 취업확정
 ```mermaid
 erDiagram
     UNIVERSITY ||--o{ SEEKER : graduate
